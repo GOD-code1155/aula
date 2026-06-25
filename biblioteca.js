@@ -1,13 +1,14 @@
 const biblioteca = {
     livros: [],
 
-    adicionarLivros(nome, autor, ano, genero) {
+    adicionarLivros(nome, autor, ano, genero, estoque) {
         const livro = {
             nome,
             autor,
             ano,
             genero,
-            disponivel: true,
+            estoque,
+            disponivel: estoque > 0,
             alugado: false,
             vezesAlugado: 0
         };
@@ -19,7 +20,7 @@ const biblioteca = {
         for (let i = 0; i < this.livros.length; i++) {
             const L = this.livros[i];
             console.log(
-                `${L.nome} - ${L.autor} - ${L.ano} - ${L.genero}`
+                `${L.nome} - ${L.autor} - ${L.ano} - ${L.genero} - Estoque: ${L.estoque}`
             );
         }
     },
@@ -30,14 +31,17 @@ const biblioteca = {
 
             if (L.nome === livro) {
 
-                if (!L.disponivel) {
+                if (L.estoque <= 0) {
                     console.log("Livro indisponível!");
                     return;
                 }
 
-                L.disponivel = false;
-                L.alugado = true;
+                L.estoque--;
                 L.vezesAlugado++;
+
+                if (L.estoque === 0) {
+                    L.disponivel = false;
+                }
 
                 console.log("Livro alugado com sucesso!");
                 return;
@@ -52,14 +56,16 @@ biblioteca.adicionarLivros(
     "The Call of Cthulhu",
     "H. P. Lovecraft",
     1928,
-    "terror cosmico"
+    "terror cosmico",
+    3
 );
 
 biblioteca.adicionarLivros(
     "The Alchemist",
     "Paulo Coelho",
     1988,
-    "Fantasia"
+    "Fantasia",
+    2
 );
 
 biblioteca.mostrarLivros();
