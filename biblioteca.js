@@ -37,8 +37,31 @@ const biblioteca = {
         }
 
         console.log(`O livro "${nome}" não existe na biblioteca.`);
-    }
-};
+    },
+    devolver(nome) {
+        for (let i = 0; i < this.livros.length; i++) {
+            const l = this.livros[i];
+
+            if (l.nome === nome) {
+                if (l. disponivel===false){
+                    l.disponivel = true;
+                    l.alugado = false
+                    l.estoque+=1;
+                    console.log(`O livro "${nome}" foi devolvido com sucesso!`);
+                    return;}
+                    else{
+                        console.log(`O livro "${nome}" não está alugado.`);
+                        return;
+                    }
+                }
+            }
+            console.log(`O livro "${nome}" não existe na biblioteca.`);
+        
+         }
+
+       
+    };
+
 
 
 biblioteca.adicionarLivros(
@@ -99,6 +122,7 @@ biblioteca.adicionarLivros(
 
 biblioteca.mostrarLivros();
 
-biblioteca.alugar();
+biblioteca.alugar("Harry Potter e a Pedra Filosofal");
+biblioteca.devolver("Harry Potter e a Pedra Filosofal");
 
 biblioteca.mostrarLivros();
